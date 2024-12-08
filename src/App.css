@@ -1,0 +1,67 @@
+.memory-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.game-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-board {
+  display: grid;
+  gap: 10px; 
+  margin-bottom: 2rem;
+  justify-items: center; 
+  max-width: 100%; 
+  width: fit-content; 
+}
+
+.game-board.easy {
+  grid-template-columns: repeat(4, 100px);
+}
+
+.game-board.medium {
+  grid-template-columns: repeat(6, 100px); 
+}
+
+.game-board.hard {
+  grid-template-columns: repeat(8, 100px); 
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #34495e;
+}
+
+
+.game-over {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.start-button, .menu-button {
+  margin-top: 1rem;
+}

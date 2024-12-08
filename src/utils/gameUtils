@@ -1,0 +1,20 @@
+export const emojiSets = {
+  easy: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'],
+  medium: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦'],
+  hard: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🦄', '🐴', '🐺', '🦊', '🦝', '🐗', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🦘', '🦬']
+};
+
+export const difficultySettings = {
+  easy: { gridSize: 16, time: 180 },
+  medium: { gridSize: 36, time: 300 },
+  hard: { gridSize: 64, time: 480 }
+};
+
+export const shuffleArray = (array) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
