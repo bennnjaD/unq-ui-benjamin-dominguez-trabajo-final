@@ -20,7 +20,7 @@ Este es un juego de memoria desarrollado con React. El objetivo del juego es enc
 1. Clona el repositorio:
 
    ```bash
-     git clone https://github.com/bennnjaD/unq-ui-benjamin-dominguez-trabajo-final.git
+   git clone https://github.com/bennnjaD/unq-ui-benjamin-dominguez-trabajo-final.git
   
 2. Navega al directorio del proyecto:
 
