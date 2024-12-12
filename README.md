@@ -19,21 +19,22 @@ Este es un juego de memoria desarrollado con React. El objetivo del juego es enc
 
 1. Clona el repositorio:
 
-   ```bash
-   git clone https://github.com/bennnjaD/unq-ui-benjamin-dominguez-trabajo-final.git
-  
+```bash
+git clone https://github.com/bennnjaD/unq-ui-benjamin-dominguez-trabajo-final.git
+```
 2. Navega al directorio del proyecto:
 
-  ```bash
-     cd tu-repositorio
-  ```
+```bash
+cd tu-repositorio
+```
 3. Instala las dependencias del proyecto:
-  ```bash
-    npm install
-  
-  Con yarn:
-    yarn install
-  ```
+```bash
+npm install
+```  
+Con yarn:
+```bash
+yarn install
+```
 
 ## Ejecución Local
 
@@ -49,7 +50,7 @@ npm run dev
 
 Con yarn:
 ```bash
-  yarn dev
+yarn dev
 ```
 
 Esto iniciará el servidor de desarrollo y podrás acceder a la aplicación en http://localhost:5173.
