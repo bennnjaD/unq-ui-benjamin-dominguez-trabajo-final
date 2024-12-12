@@ -1,29 +1,25 @@
-/* Notification.css */
-
-.notification {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
+.game-notification {
+  padding: 15px;
+  margin: 10px 0;
   border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
   text-align: center;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.restart-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #4caf50;
+.game-notification.time-up {
+  background-color: #ff6347; 
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.restart-button:hover {
-  background-color: #45a049;
+.game-notification.win {
+  background-color: #32cd32; 
+  color: white;
+}
+
+.game-notification.hide {
+  opacity: 0;
+  transform: translateY(-20px);
 }

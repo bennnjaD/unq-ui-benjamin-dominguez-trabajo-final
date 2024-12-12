@@ -1,13 +1,7 @@
-export const emojiSets = {
+export const animalsSets = {
   easy: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'],
   medium: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦'],
   hard: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🦄', '🐴', '🐺', '🦊', '🦝', '🐗', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🦘', '🦬']
-};
-
-export const flagSets = {
-  easy: ['🇦🇷', '🇧🇷', '🇨🇦', '🇨🇱', '🇨🇳', '🇫🇷', '🇩🇪', '🇮🇹'],
-  medium: ['🇦🇷', '🇧🇷', '🇨🇦', '🇨🇱', '🇨🇳', '🇫🇷', '🇩🇪', '🇮🇹', '🇯🇵', '🇲🇽', '🇺🇸', '🇪🇸', '🇬🇧', '🇷🇺', '🇦🇺', '🇰🇷', '🇮🇳'],
-  hard: ['🇦🇷', '🇧🇷', '🇨🇦', '🇨🇱', '🇨🇳', '🇫🇷', '🇩🇪', '🇮🇹', '🇯🇵', '🇲🇽', '🇺🇸', '🇪🇸', '🇬🇧', '🇷🇺', '🇦🇺', '🇰🇷', '🇮🇳', '🇸🇦', '🇪🇬', '🇳🇬', '🇰🇪', '🇿🇦', '🇸🇪', '🇳🇴', '🇩🇰', '🇫🇮', '🇨🇴', '🇵🇪', '🇵🇹', '🇹🇷', '🇳🇿']
 };
 
 export const fruitSets = {
@@ -18,9 +12,9 @@ export const fruitSets = {
 
 
 export const difficultySettings = {
-  easy: { gridSize: 16, time: 180 },
-  medium: { gridSize: 36, time: 300 },
-  hard: { gridSize: 64, time: 480 }
+  easy: { gridSize: 16, time: 60 },
+  medium: { gridSize: 36, time: 180 },
+  hard: { gridSize: 64, time: 360 }
 };
 
 export const shuffleArray = (array) => {
@@ -31,3 +25,29 @@ export const shuffleArray = (array) => {
   }
   return newArray;
 };
+
+export const createBoard = (difficulty, theme) => {
+  const { gridSize } = difficultySettings[difficulty]; 
+  const set = theme === 'animals' ? animalsSets[difficulty] : fruitSets[difficulty]; 
+
+  const numPairs = gridSize / 2;
+
+  let items = set.slice(0, numPairs);
+
+  while (items.length < numPairs) {
+    items = items.concat(set); 
+  }
+
+  items = items.slice(0, numPairs);
+
+  const cards = [...items, ...items]
+    .map((content, index) => ({
+      id: index,
+      content,
+      isFlipped: false,
+      isMatched: false,
+    }));
+
+  return shuffleArray(cards); 
+};
+
