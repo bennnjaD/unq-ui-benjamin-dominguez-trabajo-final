@@ -17,7 +17,7 @@ Este es un juego de memoria desarrollado con React. El objetivo del juego es enc
 
 ## Instalación
 
-1. Clona el repositorio:
+1. Clona el repositorio remoto hacia tu directorio desde la terminal:
 
 ```bash
 git clone https://github.com/bennnjaD/unq-ui-benjamin-dominguez-trabajo-final.git
