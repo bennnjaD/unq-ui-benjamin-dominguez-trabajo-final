@@ -12,9 +12,9 @@ export const fruitSets = {
 
 
 export const difficultySettings = {
-  easy: { gridSize: 16, time: 60 },
-  medium: { gridSize: 36, time: 180 },
-  hard: { gridSize: 64, time: 360 }
+  easy: { gridSize: 16, time: 120 },
+  medium: { gridSize: 36, time: 360 },
+  hard: { gridSize: 64, time: 480 }
 };
 
 export const shuffleArray = (array) => {

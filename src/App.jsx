@@ -17,6 +17,7 @@ const App = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
   const [gameWon, setGameWon] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(difficultySettings[difficulty].time);
   
 
   const startGame = () => {
@@ -27,6 +28,7 @@ const App = () => {
     setGameWon(false);
     setIsPlaying(true);
     setShowMenu(false);
+    setTimeLeft(difficultySettings[difficulty].time);
   };
 
   const returnToMenu = () => {
@@ -87,45 +89,66 @@ const App = () => {
     }
   }, [matchedPairs, board]);
 
+  useEffect(() => {
+    let interval;
+
+    if (isPlaying && timeLeft > 0) {
+      interval = setInterval(() => {
+          setTimeLeft(prevTime => {
+          if (prevTime <= 1) {
+            clearInterval(interval); 
+            handleTimeUp();
+            return 0;
+          }
+          return prevTime - 1; 
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, timeLeft]);
+
   return (
     <div className="memory-game">
       <h1 className="game-title">Memory Game</h1>
       {showMenu ? (
-        <Menu 
-          difficulty={difficulty} 
+        <Menu
+          difficulty={difficulty}
           setDifficulty={setDifficulty}
           theme={theme}
-          setTheme={setTheme} 
-          startGame={startGame} />
+          setTheme={setTheme}
+          startGame={startGame}
+        />
       ) : (
         <>
           <GameBoard board={board} handleCardClick={handleCardClick} difficulty={difficulty} />
-          <Timer 
-            initialTime={difficultySettings[difficulty].time} 
-            isPlaying={isPlaying} 
-            onTimeUp={handleTimeUp} 
-          />
+          <Timer timeLeft={timeLeft} />
           {gameOver && !gameWon && <Notification message="Time's up! You lost." type="time-up" />}
           {gameWon && <Notification message="Congratulations! You've won the game!" type="win" />}
           <div className="game-controls">
             {gameWon && (
               <div className="game-over-buttons">
-                <Button onClick={startGame} className="play-again-button">Play Again</Button>
+                <Button onClick={startGame} className="play-again-button">
+                  Play Again
+                </Button>
               </div>
             )}
             {gameOver && !gameWon && (
               <div className="game-over-buttons">
-                <Button onClick={startGame} className="play-again-button">Play Again</Button>
+                <Button onClick={startGame} className="play-again-button">
+                  Play Again
+                </Button>
               </div>
             )}
             {!gameWon && !gameOver && (
-              <Button onClick={returnToMenu} className="menu-button">Return to Menu</Button>
+              <Button onClick={returnToMenu} className="menu-button">
+                Return to Menu
+              </Button>
             )}
           </div>
         </>
       )}
     </div>
   );
-};
+}
 
 export default App;
