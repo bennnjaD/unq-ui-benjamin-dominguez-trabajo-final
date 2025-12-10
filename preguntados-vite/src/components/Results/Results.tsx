@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./Results.module.css";
+import React from 'react';
+import styles from './Results.module.css';
 
 type Props = {
   score: { correct: number; total: number };
@@ -12,13 +12,19 @@ const Results: React.FC<Props> = ({ score, onPlayAgain }) => {
 
   return (
     <div className={styles.container}>
-      <h2>Resultado</h2>
-      <p className={styles.summary}>{correct} de {total} respuestas correctas</p>
+      <h2>Result</h2>
+      <p className={styles.summary}>
+        {correct} out of {total} correct answers
+      </p>
       <div className={styles.bar}>
-        <div className={styles.fill} style={{ width: `${percent}%` }}>{percent}%</div>
+        <div className={styles.fill} style={{ width: `${percent}%` }}>
+          {percent}%
+        </div>
       </div>
       <div className={styles.actions}>
-        <button className="btn" onClick={onPlayAgain}>Jugar otra vez</button>
+        <button className="btn" onClick={onPlayAgain}>
+          Play again
+        </button>
       </div>
     </div>
   );

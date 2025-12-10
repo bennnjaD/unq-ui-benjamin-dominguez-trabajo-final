@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import type { Question as QType } from "../../typings";
-import styles from "./Question.module.css";
+import React, { useState, useEffect } from 'react';
+import type { Question as QType } from '../../typings';
+import styles from './Question.module.css';
 
 type Props = {
   question: QType;
@@ -9,8 +9,14 @@ type Props = {
 
 const Question: React.FC<Props> = ({ question, onAnswer }) => {
   const [selected, setSelected] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    setSelected(null);
+    setFeedback(null);
+    setDisabled(false);
+  }, [question.id]);
 
   const handleChoose = async (optId: string) => {
     if (disabled) return;
@@ -18,9 +24,9 @@ const Question: React.FC<Props> = ({ question, onAnswer }) => {
     setDisabled(true);
     try {
       const correct = await onAnswer(question.id, optId);
-      setFeedback(correct ? "correct" : "wrong");
+      setFeedback(correct ? 'correct' : 'wrong');
     } catch {
-      setFeedback("wrong");
+      setFeedback('wrong');
     }
   };
 
@@ -33,24 +39,21 @@ const Question: React.FC<Props> = ({ question, onAnswer }) => {
           const isSelected = selected === o.id;
           const className = [
             styles.option,
-            isSelected && feedback === "correct" ? styles.correct : "",
-            isSelected && feedback === "wrong" ? styles.wrong : ""
-          ].join(" ");
+            isSelected && feedback === 'correct' ? styles.correct : '',
+            isSelected && feedback === 'wrong' ? styles.wrong : '',
+          ].join(' ');
+
           return (
-            <button
-              key={o.id}
-              className={className}
-              onClick={() => handleChoose(o.id)}
-              disabled={disabled}
-            >
+            <button key={o.id} className={className} onClick={() => handleChoose(o.id)} disabled={disabled}>
               {o.text}
             </button>
           );
         })}
       </div>
 
-      {feedback === "correct" && <div className={styles.feedback}>✅ Correcto</div>}
-      {feedback === "wrong" && <div className={styles.feedbackWrong}>❌ Incorrecto</div>}
+      {feedback === 'correct' && <div className={styles.resultCorrect}>Correct</div>}
+
+      {feedback === 'wrong' && <div className={styles.resultWrong}>Incorrect</div>}
     </div>
   );
 };

@@ -1,4 +1,6 @@
-const BASE = "https://preguntados-api.vercel.app";
+import type { ApiQuestion, Question } from '../typings';
+
+const BASE = 'https://preguntados-api.vercel.app';
 
 async function tryFetchJson(url: string, opts?: RequestInit) {
   const res = await fetch(url, opts);
@@ -10,62 +12,54 @@ async function tryFetchJson(url: string, opts?: RequestInit) {
 
 export const api = {
   async getDifficulties(): Promise<{ id: string; name: string }[]> {
-    // varios intentos por si cambia el endpoint
-    const candidates = [
-      `${BASE}/api/difficulty`,
-      `${BASE}/api/difficulties`,
-      `${BASE}/api/difficultyBrinda`,
-      `${BASE}/api/difficultyBrinda/`,
-      `${BASE}/api/dificultades`
-    ];
+    const res = await fetch(`${BASE}/api/difficulty`);
 
-    for (const c of candidates) {
-      try {
-        const json = await fetch(c);
-        if (!json.ok) throw new Error();
-        const data = await json.json();
-        // asumimos que la API retorna un array de strings o {id,name}
-        if (Array.isArray(data)) {
-          // normalize
-          return data.map((it: any) =>
-            typeof it === "string" ? { id: it, name: it } : { id: it.id ?? it.name, name: it.name ?? it.id }
-          );
-        }
-      } catch {
-        // ignora y prueba siguiente
-      }
+    if (!res.ok) {
+      throw new Error('Error fetching difficulties');
     }
-    // fallback estático si la API no responde como esperamos
-    return [
-      { id: "easy", name: "Fácil" },
-      { id: "medium", name: "Medio" },
-      { id: "hard", name: "Difícil" }
-    ];
+
+    const list: string[] = await res.json();
+
+    return list.map((d) => ({
+      id: d,
+      name: d.charAt(0).toUpperCase() + d.slice(1),
+    }));
   },
 
-  async getQuestions(difficulty = "easy"): Promise<any[]> {
+  async getQuestions(difficulty = 'easy'): Promise<Question[]> {
     const url = `${BASE}/api/questions?difficulty=${encodeURIComponent(difficulty)}`;
     const data = await tryFetchJson(url);
-    // suponemos que la API devuelve objeto con array o el array mismo
-    if (Array.isArray(data)) return data;
-    if (data.questions) return data.questions;
-    return [];
+
+    let rawQuestions: ApiQuestion[] = [];
+
+    if (Array.isArray(data)) {
+      rawQuestions = data;
+    } else if (data.questions) {
+      rawQuestions = data.questions;
+    }
+
+    return rawQuestions.map((q) => ({
+      id: q.id,
+      text: q.question,
+      options: [
+        { id: 'option1', text: q.option1 },
+        { id: 'option2', text: q.option2 },
+        { id: 'option3', text: q.option3 },
+        { id: 'option4', text: q.option4 },
+      ],
+    }));
   },
 
   async postAnswer(questionId: string, optionId: string): Promise<{ correct: boolean }> {
     const url = `${BASE}/api/answer`;
     try {
       const data = await tryFetchJson(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ questionId, option: optionId })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ questionId, option: optionId }),
       });
-      // suponemos que la API devuelve { correct: boolean }
-      if (typeof data.correct === "boolean") return { correct: data.correct };
-    } catch {
-      // si falla el POST al endpoint, devolvemos respuesta local falsa para poder continuar
-    }
-    // fallback: respuesta "aleatoria" (no ideal pero permite jugar si la API no responde)
+      if (data) return { correct: data.answer };
+    } catch {}
     return { correct: Math.random() > 0.5 };
-  }
+  },
 };

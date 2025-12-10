@@ -1,4 +1,3 @@
-/* Contenedor centrado y compacto */
 .container {
   display: flex;
   flex-direction: column;
@@ -14,7 +13,6 @@
 }
 
 .container h2 {
-  /* Reducir tamaño de fuente */
   font-size: 1.8rem;
   color: var(--text-dark);
   text-align: center;
@@ -52,7 +50,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Colores distintos para cada dificultad */
 .option:nth-child(1) {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
@@ -102,4 +99,54 @@
   .options {
     gap: 0.7rem;
   }
+}
+
+.countdownOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.countdownNumber {
+  font-size: 8rem;
+  color: white;
+  font-weight: 900;
+  animation: pop 0.8s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 998;
+  font-size: 2rem;
+  font-weight: 600;
 }
